@@ -133,7 +133,7 @@ doc.setFontSize(9);
 doc.text("Descrição", 18, y + 5);
 doc.text("Valor (R$)", 170, y + 5, { align: "right" });
 
-y += 9;
+y += 12;
 
 // LINHAS
 const linhas = detalhes ? detalhes.split("\n") : [];
