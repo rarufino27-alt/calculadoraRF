@@ -77,10 +77,11 @@ doc.text(`TOTAL: R$ ${total}`, 20, y);
 const nome = `recibo_${Date.now()}.pdf`;
 const caminho = path.join(pasta, nome);
 
-doc.save(caminho);
+const pdfBuffer = doc.output("arraybuffer");
+fs.writeFileSync(caminho, Buffer.from(pdfBuffer));
 
 // retornar link
-const link = `https://SEU_BACKEND.onrender.com/recibos/${nome}`;
+const link = `https://backend-recibo-rf.onrender.com/recibos/${nome}`;
 
 res.json({ link });
 
