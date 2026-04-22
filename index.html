@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Preço Certo — calculadora profissional do preço ideal do seu serviço." />
+  <title>Preço Certo 💼 — Calcule o preço ideal do seu serviço</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <!-- Header -->
+    <header class="header">
+      <span class="badge">💼 Calculadora Profissional</span>
+      <h1>Preço Certo</h1>
+      <p>Calcule o valor ideal do seu serviço com precisão</p>
+    </header>
+
+    <!-- Formulário -->
+    <section class="card">
+      <form id="form" novalidate>
+        <div class="field">
+          <label for="custo">Custo (R$) <span class="req">*</span></label>
+          <input id="custo" type="number" step="0.01" min="0" placeholder="Ex.: 25.50" required />
+        </div>
+
+        <div class="field">
+          <label for="tempo">Tempo gasto (horas) <span class="req">*</span></label>
+          <input id="tempo" type="number" step="0.01" min="0" placeholder="Ex.: 2.5" required />
+        </div>
+
+        <div class="field">
+          <label for="renda">Renda mensal desejada (R$) <span class="req">*</span></label>
+          <input id="renda" type="number" step="0.01" min="0" placeholder="Ex.: 5000" required />
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="horas-mes">Horas/mês <span class="hint">opcional</span></label>
+            <input id="horas-mes" type="number" step="0.01" min="0" value="160" placeholder="160" />
+          </div>
+          <div class="field">
+            <label for="preco-atual">Preço atual (R$) <span class="hint">opcional</span></label>
+            <input id="preco-atual" type="number" step="0.01" min="0" placeholder="Ex.: 80" />
+          </div>
+        </div>
+
+        <div id="erro" class="erro" hidden></div>
+
+        <button type="submit" class="btn-primary">Calcular preço ideal</button>
+      </form>
+    </section>
+
+    <!-- Resultado -->
+    <section id="resultado" class="card resultado" hidden>
+      <div class="row-top">
+        <span class="label-mini">Seu valor por hora</span>
+        <span id="valor-hora" class="valor-mini">R$ 0,00</span>
+      </div>
+
+      <div class="destaque">
+        <p class="label-mini">Preço ideal</p>
+        <p id="preco-ideal" class="preco-grande">R$ 0,00</p>
+        <p id="composicao" class="composicao"></p>
+      </div>
+
+      <div id="comparacao" class="comparacao" hidden>
+        <div class="status">
+          <span id="status-icon" class="status-icon">↗</span>
+          <div>
+            <p id="status-titulo" class="status-titulo">Seu preço está saudável</p>
+            <div class="grid-2">
+              <div>
+                <p class="label-mini">Diferença</p>
+                <p id="diferenca" class="valor-medio">R$ 0,00</p>
+              </div>
+              <div>
+                <p class="label-mini">Percentual</p>
+                <p id="percentual" class="valor-medio">0%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inteligencia">
+        <p>Para atingir sua renda, você deveria cobrar <strong id="recomendacao">R$ 0,00</strong>.</p>
+        <p id="servicos-msg" class="muted" hidden>
+          Ou realizar <strong id="servicos-num">0</strong> serviços por mês ao preço atual.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">Preço Certo · Calculadora de precificação de serviços</footer>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
