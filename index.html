@@ -9,303 +9,368 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+/* =============================================================
+   Calculador RF — Estilo fintech / dashboard SaaS
+   ============================================================= */
 
-  /* ============================================================
-   Preço Certo — Estilo fintech moderno, mobile-first
-   Paleta:
-     --azul-escuro: #0F172A
-     --azul-medio:  #1E40AF
-     --verde:       #16A34A
-     --vermelho:    #DC2626
-     --cinza-claro: #F1F5F9
-   ============================================================ */
-
+/* ---------- Tokens ---------- */
 :root {
   --azul-escuro: #0F172A;
   --azul-medio: #1E40AF;
-  --azul-medio-hover: #1D3A9A;
+  --azul-claro: #3B82F6;
   --verde: #16A34A;
+  --verde-soft: #DCFCE7;
   --vermelho: #DC2626;
-  --cinza-claro: #F1F5F9;
-  --cinza-borda: #E2E8F0;
-  --cinza-texto: #64748B;
-  --branco: #FFFFFF;
-  --surface: #F8FAFC;
+  --vermelho-soft: #FEE2E2;
+  --amarelo: #F59E0B;
+  --amarelo-soft: #FEF3C7;
+  --cinza-50: #F8FAFC;
+  --cinza-100: #F1F5F9;
+  --cinza-200: #E2E8F0;
+  --cinza-300: #CBD5E1;
+  --cinza-500: #64748B;
+  --cinza-700: #334155;
 
   --radius: 14px;
   --radius-sm: 10px;
-  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04),
-                 0 8px 24px -8px rgba(15, 23, 42, 0.12);
-  --shadow-elevated: 0 4px 12px -2px rgba(15, 23, 42, 0.08),
-                     0 20px 48px -12px rgba(15, 23, 42, 0.18);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 16px -4px rgba(15, 23, 42, 0.10), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 48px -16px rgba(15, 23, 42, 0.20);
+
+  --transition: 200ms cubic-bezier(.16,1,.3,1);
 }
 
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--cinza-100);
+  color: var(--azul-escuro);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--cinza-claro);
-  color: var(--azul-escuro);
-  min-height: 100vh;
   background-image:
-    radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.08) 0px, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(30, 64, 175, 0.05) 0px, transparent 50%);
-  line-height: 1.5;
+    radial-gradient(circle at 0% 0%, rgba(30, 64, 175, 0.07) 0, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(30, 64, 175, 0.05) 0, transparent 50%);
+  min-height: 100vh;
 }
 
-/* Layout */
-.container {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 40px 16px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* Header */
-.header { text-align: center; }
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(30, 64, 175, 0.1);
-  color: var(--azul-medio);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 12px;
-}
-.header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0 0 6px;
-  letter-spacing: -0.02em;
-}
-.header h1::after { content: " 💼"; }
-.header p {
-  margin: 0;
-  color: var(--cinza-texto);
-  font-size: 15px;
-}
-
-/* Card */
-.card {
-  background: var(--branco);
-  border: 1px solid var(--cinza-borda);
-  border-radius: var(--radius);
-  padding: 28px;
-  box-shadow: var(--shadow-card);
-}
-
-/* Form */
-form { display: flex; flex-direction: column; gap: 18px; }
-
-.field { display: flex; flex-direction: column; gap: 6px; }
-
-.field label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--azul-escuro);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.req { color: var(--vermelho); }
-.hint { font-weight: 400; font-size: 12px; color: var(--cinza-texto); }
-
-input[type="number"] {
-  width: 100%;
-  height: 44px;
-  border: 1px solid var(--cinza-borda);
+button { font-family: inherit; cursor: pointer; }
+input, output { font-family: inherit; }
+h1, h2, h3 { margin: 0; line-height: 1.2; letter-spacing: -0.01em; }
+p { margin: 0; }
+.muted { color: var(--cinza-500); font-size: 0.9rem; }
+.hint {
+  margin-top: 1rem;
+  padding: .75rem 1rem;
+  background: var(--cinza-50);
+  border: 1px solid var(--cinza-200);
   border-radius: var(--radius-sm);
-  padding: 0 14px;
-  font-size: 14px;
-  font-family: inherit;
+  color: var(--cinza-700);
+  font-size: .875rem;
+}
+
+/* ---------- Container ---------- */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---------- Header ---------- */
+.app-header {
+  background: #fff;
+  border-bottom: 1px solid var(--cinza-200);
+  padding: 1.25rem 0 1rem;
+  position: sticky; top: 0; z-index: 10;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.92);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; margin-bottom: 1rem;
+}
+.brand { display: flex; align-items: center; gap: .9rem; }
+.brand-mark {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--azul-medio), var(--azul-escuro));
+  color: #fff; font-weight: 800; border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  letter-spacing: -.02em;
+}
+.brand-title { font-size: 1.25rem; font-weight: 700; }
+.brand-sub { font-size: .85rem; color: var(--cinza-500); }
+
+/* Barra de progresso */
+.progress-wrap { display: flex; flex-direction: column; gap: .5rem; }
+.progress-track {
+  height: 8px; background: var(--cinza-200);
+  border-radius: 999px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--azul-medio), var(--azul-claro));
+  border-radius: 999px;
+  transition: width 350ms cubic-bezier(.16,1,.3,1);
+}
+.progress-meta {
+  display: flex; justify-content: space-between;
+  font-size: .85rem; color: var(--cinza-500);
+}
+.progress-meta strong { color: var(--azul-escuro); }
+
+/* ---------- Main ---------- */
+.main { padding: 2rem 1.25rem 4rem; }
+
+/* ---------- Card / Step ---------- */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid var(--cinza-200);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  transition: box-shadow var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+.step { display: none; animation: fadeIn .35s cubic-bezier(.16,1,.3,1) both; }
+.step.active { display: block; }
+
+.step-header {
+  display: flex; gap: 1rem; align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.step-badge {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  background: var(--azul-escuro); color: #fff;
+  border-radius: 10px; font-weight: 700;
+}
+.step-header h2 { font-size: 1.25rem; font-weight: 700; }
+
+/* ---------- Grid ---------- */
+.grid { display: grid; gap: 1rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 720px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ---------- Field ---------- */
+.field { display: flex; flex-direction: column; gap: .4rem; }
+.field label {
+  font-size: .85rem; font-weight: 600;
+  color: var(--cinza-700);
+}
+.field input {
+  appearance: none;
+  border: 1.5px solid var(--cinza-200);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  padding: .75rem .9rem;
+  font-size: 1rem;
   color: var(--azul-escuro);
-  background: var(--branco);
-  font-variant-numeric: tabular-nums;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  appearance: textfield;
-  -moz-appearance: textfield;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
 }
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none; margin: 0;
-}
-input[type="number"]:focus {
+.field input::placeholder { color: var(--cinza-300); }
+.field input:focus {
   outline: none;
   border-color: var(--azul-medio);
-  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.12);
 }
-input::placeholder { color: #94A3B8; }
+.field input:hover:not(:focus) { border-color: var(--cinza-300); }
+.field small { font-size: .75rem; }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  padding-top: 6px;
-  border-top: 1px solid var(--cinza-borda);
-}
-@media (min-width: 480px) {
-  .grid-2 { grid-template-columns: 1fr 1fr; }
-}
-
-/* Erro */
-.erro {
-  background: rgba(220, 38, 38, 0.08);
-  color: var(--vermelho);
-  border: 1px solid rgba(220, 38, 38, 0.2);
-  padding: 10px 12px;
+.field.readonly .output {
+  display: block;
+  padding: .75rem .9rem;
+  background: var(--cinza-50);
+  border: 1.5px dashed var(--cinza-200);
   border-radius: var(--radius-sm);
-  font-size: 14px;
+  font-weight: 700; font-size: 1rem;
+  color: var(--azul-escuro);
 }
 
-/* Botão */
+/* ---------- Choice (radio cards) ---------- */
+.choice {
+  position: relative; display: block; cursor: pointer;
+  border: 2px solid var(--cinza-200);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  background: #fff;
+  transition: all var(--transition);
+}
+.choice:hover { border-color: var(--azul-claro); transform: translateY(-2px); }
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice:has(input:checked) {
+  border-color: var(--azul-medio);
+  background: linear-gradient(135deg, rgba(30,64,175,0.05), rgba(59,130,246,0.05));
+  box-shadow: 0 0 0 4px rgba(30, 64, 175, 0.1);
+}
+.choice-body { display: flex; flex-direction: column; gap: .25rem; }
+.choice-icon { font-size: 1.75rem; margin-bottom: .25rem; }
+.choice-body strong { font-size: 1.05rem; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  appearance: none; border: 0;
+  font-weight: 600; font-size: .95rem;
+  padding: .8rem 1.4rem;
+  border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: .5rem;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
 .btn-primary {
-  width: 100%;
-  height: 48px;
-  border: none;
-  border-radius: var(--radius-sm);
-  background: var(--azul-medio);
-  color: #fff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.15s, background 0.15s;
+  background: var(--azul-escuro); color: #fff;
+  box-shadow: var(--shadow-sm);
 }
-.btn-primary:hover {
-  background: var(--azul-medio-hover);
-  transform: translateY(-1px);
+.btn-primary:hover { background: var(--azul-medio); box-shadow: var(--shadow-md); }
+.btn-success {
+  background: var(--verde); color: #fff;
+  box-shadow: var(--shadow-sm);
 }
-.btn-primary:active { transform: translateY(0); }
-.btn-primary:focus-visible {
-  outline: 2px solid var(--azul-medio);
-  outline-offset: 2px;
+.btn-success:hover { background: #15803D; box-shadow: var(--shadow-md); }
+.btn-ghost {
+  background: transparent; color: var(--cinza-700);
+  border: 1.5px solid var(--cinza-200);
 }
+.btn-ghost:hover { background: var(--cinza-50); border-color: var(--cinza-300); }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
-/* Resultado */
-.resultado {
-  padding: 0;
-  overflow: hidden;
-  box-shadow: var(--shadow-elevated);
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.row-top {
-  display: flex;
+/* ---------- Nav ---------- */
+.nav-row {
+  display: flex; gap: .75rem;
+  margin-top: 1.5rem;
   justify-content: space-between;
-  align-items: center;
-  padding: 14px 28px;
-  border-bottom: 1px solid var(--cinza-borda);
-  background: var(--surface);
 }
+.nav-row .btn-primary, .nav-row .btn-success { margin-left: auto; }
 
-.label-mini {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-  color: var(--cinza-texto);
+/* ---------- Dashboard ---------- */
+.dashboard {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  animation: fadeIn .4s cubic-bezier(.16,1,.3,1) both;
 }
+.dashboard-header {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+.dashboard-header h2 { font-size: 1.5rem; }
 
-.valor-mini {
-  font-size: 16px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.destaque { padding: 32px 28px; text-align: center; }
-.destaque .label-mini { display: block; margin-bottom: 8px; }
-.preco-grande {
-  font-size: 44px;
-  font-weight: 700;
-  margin: 0;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-}
-.composicao {
-  margin: 12px 0 0;
-  font-size: 12px;
-  color: var(--cinza-texto);
-}
-
-.comparacao {
-  padding: 20px 28px;
-  border-top: 1px solid var(--cinza-borda);
-}
-.comparacao.lucro { background: rgba(22, 163, 74, 0.06); }
-.comparacao.prejuizo { background: rgba(220, 38, 38, 0.06); }
-
-.status { display: flex; gap: 12px; align-items: flex-start; }
-.status-icon {
-  flex: 0 0 auto;
-  width: 36px; height: 36px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 700;
+/* Hero card (preço ideal) */
+.hero-card {
+  background: linear-gradient(135deg, var(--azul-escuro), var(--azul-medio));
   color: #fff;
-  background: var(--verde);
+  border: 0;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  position: relative; overflow: hidden;
 }
-.comparacao.prejuizo .status-icon { background: var(--vermelho); }
+.hero-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 0%, rgba(255,255,255,0.15), transparent 50%);
+  pointer-events: none;
+}
+.hero-label {
+  display: block;
+  font-size: .85rem; text-transform: uppercase;
+  letter-spacing: .15em; opacity: .8;
+  margin-bottom: .75rem;
+}
+.hero-value {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 800; letter-spacing: -.02em;
+  line-height: 1;
+}
+.hero-status {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: .4rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: .9rem; font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+.hero-card.is-good { background: linear-gradient(135deg, #14532D, var(--verde)); }
+.hero-card.is-bad { background: linear-gradient(135deg, #7F1D1D, var(--vermelho)); }
+.hero-card.is-warn { background: linear-gradient(135deg, #78350F, var(--amarelo)); }
 
-.status-titulo {
-  margin: 4px 0 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--verde);
+/* Metrics */
+.metrics { gap: 1rem; }
+.metric {
+  background: #fff;
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.25rem;
+  display: flex; flex-direction: column; gap: .25rem;
+  transition: all var(--transition);
 }
-.comparacao.prejuizo .status-titulo { color: var(--vermelho); }
+.metric:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--cinza-300);
+}
+.metric-label {
+  font-size: .8rem; font-weight: 500;
+  color: var(--cinza-500); text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.metric-value {
+  font-size: 1.35rem; font-weight: 700;
+  color: var(--azul-escuro);
+}
 
-.status .grid-2 {
-  border: none;
-  padding-top: 0;
-  gap: 12px;
-  grid-template-columns: 1fr 1fr;
+/* Insights */
+.insights h3 { font-size: 1.1rem; margin-bottom: .75rem; }
+.diagnostico {
+  font-size: 1.05rem; font-weight: 600;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--cinza-50);
+  border-left: 4px solid var(--azul-medio);
+  margin-bottom: 1rem;
 }
-
-.valor-medio {
-  margin: 4px 0 0;
-  font-size: 15px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+.diagnostico.good { background: var(--verde-soft); border-left-color: var(--verde); color: #14532D; }
+.diagnostico.bad { background: var(--vermelho-soft); border-left-color: var(--vermelho); color: #7F1D1D; }
+.diagnostico.warn { background: var(--amarelo-soft); border-left-color: var(--amarelo); color: #78350F; }
+.insights-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .5rem;
 }
-
-.inteligencia {
-  padding: 20px 28px;
-  border-top: 1px solid var(--cinza-borda);
-  background: var(--surface);
-  font-size: 14px;
+.insights-list li {
+  padding: .75rem 1rem;
+  background: var(--cinza-50);
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  border: 1px solid var(--cinza-200);
 }
-.inteligencia p { margin: 0 0 6px; }
-.inteligencia .muted { color: var(--cinza-texto); }
 
 /* Footer */
-.footer {
+.app-footer {
+  padding: 2rem 0;
   text-align: center;
-  font-size: 12px;
-  color: var(--cinza-texto);
-  padding-top: 8px;
+  color: var(--cinza-500);
+  border-top: 1px solid var(--cinza-200);
+  margin-top: 3rem;
+  background: #fff;
 }
 
-/* Animações */
-@keyframes fadeInUp {
+/* Animations */
+@keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-  </style>
+/* Validação */
+.field input.is-invalid {
+  border-color: var(--vermelho);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+}
+</style>
 </head>
 <body>
   <main class="container">
@@ -394,133 +459,454 @@ input::placeholder { color: #94A3B8; }
     <footer class="footer">Preço Certo · Calculadora de precificação de serviços</footer>
   </main>
 
-  <script>
-    /* ============================================================
-   Preço Certo — Lógica de cálculo
-   Fórmulas:
-     valorHora           = rendaMensal / horasMes
-     custoTempo          = tempo * valorHora
-     precoIdeal          = custo + custoTempo
-     diferenca           = precoAtual - precoIdeal
-     percentual          = (diferenca / precoIdeal) * 100
-     servicosNecessarios = rendaMensal / (precoAtual - custo)
-   ============================================================ */
+<script>
+/* =============================================================
+   Calculador RF — Sistema profissional de precificação
+   HTML + CSS + JavaScript puro (sem dependências externas)
+   ============================================================= */
 
 (() => {
-  "use strict";
+  'use strict';
 
-  // Formatador BRL
+  // ---------- Constantes ----------
+  const STORAGE_KEY = 'calculador-rf-v1';
+  const TOTAL_STEPS = 7;
+  const STEP_TITLES = {
+    1: 'Tipo de cálculo',
+    2: 'Custos diretos (CMV)',
+    3: 'Custos indiretos',
+    4: 'Tempo de trabalho',
+    5: 'Impostos e taxas',
+    6: 'Margem de lucro',
+    7: 'Preço atual (opcional)'
+  };
+
+  // ---------- Estado ----------
+  let currentStep = 1;
+  let lastMarginEdit = 'pct'; // qual margem foi editada por último: 'pct' ou 'fixo'
+
+  // ---------- Helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  /** Converte input de texto em número, sempre seguro (>= 0). */
+  const num = (id, fallback = 0) => {
+    const el = $(id);
+    if (!el) return fallback;
+    const v = parseFloat(String(el.value).replace(',', '.'));
+    return Number.isFinite(v) && v >= 0 ? v : fallback;
+  };
+
+  /** Formata valor monetário em BRL. */
   const brl = (n) =>
-    n.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    new Intl.NumberFormat('pt-BR', {
+      style: 'currency', currency: 'BRL'
+    }).format(Number.isFinite(n) ? n : 0);
 
-  // Elementos
-  const form = document.getElementById("form");
-  const erroEl = document.getElementById("erro");
-  const resultado = document.getElementById("resultado");
-  const valorHoraEl = document.getElementById("valor-hora");
-  const precoIdealEl = document.getElementById("preco-ideal");
-  const composicaoEl = document.getElementById("composicao");
-  const comparacaoEl = document.getElementById("comparacao");
-  const statusIconEl = document.getElementById("status-icon");
-  const statusTituloEl = document.getElementById("status-titulo");
-  const diferencaEl = document.getElementById("diferenca");
-  const percentualEl = document.getElementById("percentual");
-  const recomendacaoEl = document.getElementById("recomendacao");
-  const servicosMsg = document.getElementById("servicos-msg");
-  const servicosNumEl = document.getElementById("servicos-num");
+  /** Formata percentual (0.25 -> "25,00%"). */
+  const pct = (n) =>
+    new Intl.NumberFormat('pt-BR', {
+      style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2
+    }).format(Number.isFinite(n) ? n : 0);
 
-  function mostrarErro(msg) {
-    erroEl.textContent = msg;
-    erroEl.hidden = false;
+  /** Divisão segura: evita NaN/Infinity. */
+  const safeDiv = (a, b) => (b > 0 ? a / b : 0);
+
+  // ---------- Coleta de dados ----------
+  function coletarDados() {
+    const tipo = document.querySelector('input[name="tipo"]:checked')?.value || 'produto';
+    return {
+      tipo,
+      custoMateriais: num('custoMateriais'),
+      custoUnitario: num('custoUnitario'),
+      quantidade: num('quantidade', 1),
+      aluguel: num('aluguel'),
+      energia: num('energia'),
+      internet: num('internet'),
+      taxasPlat: num('taxasPlat'),
+      outros: num('outros'),
+      tempo: num('tempo'),
+      horasMes: num('horasMes', 160),
+      rendaMes: num('rendaMes'),
+      imposto: num('imposto'),
+      taxaPlat: num('taxaPlat'),
+      taxasAdd: num('taxasAdd'),
+      margemPct: num('margemPct'),
+      lucroFixo: num('lucroFixo'),
+      precoAtual: num('precoAtual')
+    };
   }
 
-  function limparErro() {
-    erroEl.hidden = true;
-    erroEl.textContent = "";
+  // ---------- Motor de cálculo ----------
+
+  /** Valor da hora a partir da renda mensal e horas trabalhadas. */
+  function calcValorHora(renda, horas) {
+    return safeDiv(renda, horas);
   }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    limparErro();
+  /** Custo do tempo aplicado por unidade. */
+  function calcCustoTempo(tempo, valorHora) {
+    return tempo * valorHora;
+  }
 
-    // Captura valores
-    const custo = parseFloat(document.getElementById("custo").value);
-    const tempo = parseFloat(document.getElementById("tempo").value);
-    const renda = parseFloat(document.getElementById("renda").value);
-    const horasMes = parseFloat(document.getElementById("horas-mes").value) || 160;
-    const precoAtualRaw = document.getElementById("preco-atual").value.trim();
-    const precoAtual = precoAtualRaw === "" ? null : parseFloat(precoAtualRaw);
-
-    // Validação
-    if (isNaN(custo) || isNaN(tempo) || isNaN(renda)) {
-      mostrarErro("Preencha todos os campos obrigatórios com valores válidos.");
-      resultado.hidden = true;
-      return;
+  /** CMV: custo direto OU unitário * quantidade. Pega o que houver. */
+  function calcCMV({ custoMateriais, custoUnitario, quantidade }) {
+    const calculado = custoUnitario * quantidade;
+    if (custoMateriais > 0 && calculado > 0) {
+      // Se o usuário preencheu os dois, usa o maior (mais conservador)
+      return Math.max(custoMateriais, calculado);
     }
-    if (horasMes <= 0) {
-      mostrarErro("Horas trabalhadas no mês deve ser maior que zero.");
-      resultado.hidden = true;
-      return;
+    return custoMateriais > 0 ? custoMateriais : calculado;
+  }
+
+  /** Custos indiretos somados, rateados pela quantidade. */
+  function calcIndiretos(d) {
+    const total = d.aluguel + d.energia + d.internet + d.taxasPlat + d.outros;
+    const qty = d.quantidade > 0 ? d.quantidade : 1;
+    return safeDiv(total, qty);
+  }
+
+  /** Calcula tudo e devolve um objeto com todos os indicadores. */
+  function calcular(d) {
+    const valorHora = calcValorHora(d.rendaMes, d.horasMes);
+    const custoTempo = calcCustoTempo(d.tempo, valorHora);
+    const cmv = calcCMV(d);
+    const indiretoUnit = calcIndiretos(d);
+    const custoTotal = cmv + indiretoUnit + custoTempo;
+
+    // Percentuais aplicados sobre o preço final (markup divisor)
+    const impostosFrac = d.imposto / 100;
+    const taxasFrac = (d.taxaPlat + d.taxasAdd) / 100;
+    const taxasTotalFrac = impostosFrac + taxasFrac;
+
+    let precoVenda;
+    let margemFrac;
+
+    if (lastMarginEdit === 'fixo' && d.lucroFixo > 0) {
+      // Preço por lucro fixo: preço = (custo + lucro) / (1 - taxas)
+      const denom = 1 - taxasTotalFrac;
+      precoVenda = denom > 0 ? (custoTotal + d.lucroFixo) / denom : 0;
+      margemFrac = safeDiv(d.lucroFixo, precoVenda);
+    } else {
+      // Preço por margem %
+      margemFrac = (d.margemPct || 0) / 100;
+      const denom = 1 - taxasTotalFrac - margemFrac;
+      precoVenda = denom > 0 ? custoTotal / denom : 0;
     }
 
-    // Cálculos principais
-    const valorHora = renda / horasMes;
-    const custoTempo = tempo * valorHora;
-    const precoIdeal = custo + custoTempo;
+    const lucroBruto = precoVenda - custoTotal;
+    const lucroLiquido = lucroBruto - precoVenda * taxasTotalFrac;
+    const margemReal = safeDiv(lucroLiquido, precoVenda);
+    const pontoEquilibrio = safeDiv(custoTotal, precoVenda);
 
-    // Renderiza topo / destaque
-    valorHoraEl.textContent = brl(valorHora);
-    precoIdealEl.textContent = brl(precoIdeal);
-    composicaoEl.textContent =
-      "Custo " + brl(custo) + " + Tempo " + brl(custoTempo);
-    recomendacaoEl.textContent = brl(precoIdeal);
+    const diferenca = d.precoAtual > 0 ? d.precoAtual - precoVenda : null;
+    const variacao = d.precoAtual > 0 ? safeDiv(diferenca, precoVenda) : null;
 
-    // Comparação se há preço atual
-    if (precoAtual !== null && !isNaN(precoAtual)) {
-      const diferenca = precoAtual - precoIdeal;
-      const percentual = precoIdeal > 0 ? (diferenca / precoIdeal) * 100 : 0;
-      const ganhosPorServico = precoAtual - custo;
-      const servicosNecessarios =
-        ganhosPorServico > 0 ? renda / ganhosPorServico : null;
+    return {
+      valorHora, custoTempo, cmv, indiretoUnit,
+      custoTotal, precoVenda,
+      lucroBruto, lucroLiquido, margemReal, pontoEquilibrio,
+      diferenca, variacao,
+      taxasTotalFrac
+    };
+  }
 
-      const lucro = diferenca >= 0;
-      comparacaoEl.classList.toggle("lucro", lucro);
-      comparacaoEl.classList.toggle("prejuizo", !lucro);
-      statusIconEl.textContent = lucro ? "↗" : "↘";
-      statusTituloEl.textContent = lucro
-        ? "Seu preço está saudável"
-        : "Você está cobrando abaixo do ideal";
+  // ---------- Diagnóstico e insights ----------
+  function gerarDiagnostico(r) {
+    if (r.precoVenda <= 0) {
+      return { tipo: 'bad', texto: '⚠️ Não foi possível calcular o preço — verifique impostos + margem (não pode somar 100%).' };
+    }
+    if (r.lucroLiquido <= 0) {
+      return { tipo: 'bad', texto: '🚨 Você está no prejuízo — o preço não cobre custos e impostos.' };
+    }
+    if (r.margemReal < 0.10) {
+      return { tipo: 'warn', texto: '⚠️ Margem muito baixa (< 10%) — pouca folga para imprevistos.' };
+    }
+    if (r.margemReal < 0.20) {
+      return { tipo: 'warn', texto: '🟡 Margem aceitável, mas próxima do limite saudável.' };
+    }
+    return { tipo: 'good', texto: '✅ Preço saudável — sua margem real está em nível profissional.' };
+  }
 
-      diferencaEl.textContent = brl(diferenca);
-      percentualEl.textContent = percentual.toFixed(2) + "%";
-      comparacaoEl.hidden = false;
+  function gerarInsights(r, d) {
+    const insights = [];
 
-      if (servicosNecessarios !== null && isFinite(servicosNecessarios)) {
-        servicosNumEl.textContent = Math.ceil(servicosNecessarios);
-        servicosMsg.hidden = false;
+    // Comparação com preço atual
+    if (d.precoAtual > 0) {
+      if (r.diferenca < 0) {
+        insights.push(`💸 Você está cobrando ${brl(Math.abs(r.diferenca))} a menos que o ideal. Considere reajustar.`);
+      } else if (r.diferenca > 0) {
+        insights.push(`💰 Seu preço atual está ${brl(r.diferenca)} acima do ideal — boa margem competitiva.`);
       } else {
-        servicosMsg.hidden = true;
+        insights.push('🎯 Seu preço atual coincide com o ideal calculado.');
+      }
+    }
+
+    // Custo alto
+    if (r.pontoEquilibrio > 0.7 && r.precoVenda > 0) {
+      insights.push(`📊 Seus custos representam ${pct(r.pontoEquilibrio)} do preço — considere otimizar despesas.`);
+    }
+
+    // Margem baixa
+    if (r.margemReal < 0.20 && r.margemReal > 0) {
+      const sugestao = ((0.25 - r.margemReal) * 100).toFixed(1);
+      insights.push(`📈 Para atingir 25% de margem, aumente o preço em aproximadamente ${sugestao}%.`);
+    }
+
+    // Quantos serviços/produtos para a meta
+    if (d.precoAtual > 0 && d.rendaMes > 0) {
+      const ganhoUnit = d.precoAtual - r.custoTotal;
+      if (ganhoUnit > 0) {
+        const qty = Math.ceil(d.rendaMes / ganhoUnit);
+        insights.push(`🎯 Para atingir sua renda de ${brl(d.rendaMes)}/mês, você precisaria vender ~${qty} ${d.tipo === 'produto' ? 'unidades' : 'serviços'}/mês.`);
+      }
+    }
+
+    // Recomendação de venda no preço ideal
+    if (r.precoVenda > 0 && d.rendaMes > 0) {
+      const ganhoUnit = r.precoVenda - r.custoTotal;
+      if (ganhoUnit > 0) {
+        const qty = Math.ceil(d.rendaMes / ganhoUnit);
+        insights.push(`✨ Cobrando o preço ideal (${brl(r.precoVenda)}), bastam ~${qty} ${d.tipo === 'produto' ? 'unidades' : 'serviços'}/mês.`);
+      }
+    }
+
+    return insights;
+  }
+
+  // ---------- Renderização do dashboard ----------
+  function renderDashboard(r, d) {
+    $('precoIdealOut').textContent = brl(r.precoVenda);
+    $('m_hora').textContent = brl(r.valorHora);
+    $('m_cmv').textContent = brl(r.cmv);
+    $('m_custoTotal').textContent = brl(r.custoTotal);
+    $('m_lucroBruto').textContent = brl(r.lucroBruto);
+    $('m_lucroLiquido').textContent = brl(r.lucroLiquido);
+    $('m_margem').textContent = pct(r.margemReal);
+    $('m_pe').textContent = pct(r.pontoEquilibrio);
+
+    // Diferença / variação
+    const heroCard = $('heroCard');
+    const statusEl = $('statusOut');
+    heroCard.classList.remove('is-good', 'is-bad', 'is-warn');
+
+    if (d.precoAtual > 0) {
+      $('m_diffWrap').hidden = false;
+      $('m_pctWrap').hidden = false;
+      $('m_diff').textContent = brl(r.diferenca);
+      $('m_pct').textContent = pct(r.variacao);
+
+      if (r.diferenca >= 0) {
+        statusEl.textContent = '✅ Preço atual cobre o ideal';
+        heroCard.classList.add('is-good');
+      } else {
+        statusEl.textContent = '⚠️ Preço atual abaixo do ideal';
+        heroCard.classList.add('is-bad');
       }
     } else {
-      comparacaoEl.hidden = true;
-      servicosMsg.hidden = true;
+      $('m_diffWrap').hidden = true;
+      $('m_pctWrap').hidden = true;
+      if (r.lucroLiquido > 0) {
+        statusEl.textContent = '💼 Preço calculado com sucesso';
+        heroCard.classList.add('is-good');
+      } else {
+        statusEl.textContent = '⚠️ Revise os parâmetros';
+        heroCard.classList.add('is-warn');
+      }
     }
 
-    // Mostra resultado e rola até ele
-    resultado.hidden = false;
-    // Reinicia animação
-    resultado.style.animation = "none";
-    void resultado.offsetWidth;
-    resultado.style.animation = "";
-    resultado.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+    // Diagnóstico
+    const diag = gerarDiagnostico(r);
+    const diagEl = $('diagnostico');
+    diagEl.textContent = diag.texto;
+    diagEl.className = 'diagnostico ' + diag.tipo;
+
+    // Insights
+    const ul = $('insightsList');
+    ul.innerHTML = '';
+    gerarInsights(r, d).forEach(text => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      ul.appendChild(li);
+    });
+
+    // Mostra dashboard, esconde form
+    $('wizardForm').hidden = true;
+    $('dashboard').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---------- Live preview de campos calculados ----------
+  function atualizarPreviews() {
+    const d = coletarDados();
+    $('cmvOut').textContent = brl(calcCMV(d));
+    $('indiretoOut').textContent = brl(calcIndiretos(d));
+    $('valorHoraOut').textContent = brl(calcValorHora(d.rendaMes, d.horasMes));
+  }
+
+  // ---------- Wizard ----------
+  function mostrarStep(n) {
+    currentStep = Math.max(1, Math.min(TOTAL_STEPS, n));
+    $$('.step').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+
+    $('stepCurrent').textContent = currentStep;
+    $('stepTotal').textContent = TOTAL_STEPS;
+    $('stepTitle').textContent = STEP_TITLES[currentStep];
+    $('progressBar').style.width = `${(currentStep / TOTAL_STEPS) * 100}%`;
+
+    $('btnVoltar').disabled = currentStep === 1;
+    const isLast = currentStep === TOTAL_STEPS;
+    $('btnProximo').hidden = isLast;
+    $('btnCalcular').hidden = !isLast;
+
+    atualizarPreviews();
+  }
+
+  function validarStep(n) {
+    // Validação simples por etapa — só campos críticos
+    const required = {
+      2: ['custoMateriais', 'custoUnitario'], // pelo menos um
+      4: ['rendaMes']
+    };
+    const fields = required[n];
+    if (!fields) return true;
+
+    let ok = false;
+    let firstInvalid = null;
+
+    if (n === 2) {
+      const d = coletarDados();
+      ok = d.custoMateriais > 0 || (d.custoUnitario > 0 && d.quantidade > 0);
+      if (!ok) firstInvalid = $('custoMateriais');
+    } else {
+      ok = fields.every(id => {
+        const v = num(id);
+        if (v <= 0 && !firstInvalid) firstInvalid = $(id);
+        return v > 0;
+      });
+    }
+
+    if (!ok && firstInvalid) {
+      firstInvalid.classList.add('is-invalid');
+      firstInvalid.focus();
+      setTimeout(() => firstInvalid.classList.remove('is-invalid'), 2000);
+    }
+    return ok;
+  }
+
+  // ---------- Persistência (localStorage) ----------
+  const SAVE_IDS = [
+    'custoMateriais','custoUnitario','quantidade',
+    'aluguel','energia','internet','taxasPlat','outros',
+    'tempo','horasMes','rendaMes',
+    'imposto','taxaPlat','taxasAdd',
+    'margemPct','lucroFixo','precoAtual'
+  ];
+
+  function salvar() {
+    try {
+      const data = {};
+      SAVE_IDS.forEach(id => { data[id] = $(id)?.value || ''; });
+      data.tipo = document.querySelector('input[name="tipo"]:checked')?.value || 'produto';
+      data.lastMarginEdit = lastMarginEdit;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Falha ao salvar:', e);
+    }
+  }
+
+  function carregar() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      SAVE_IDS.forEach(id => {
+        if (data[id] !== undefined && $(id)) $(id).value = data[id];
+      });
+      if (data.tipo) {
+        const r = document.querySelector(`input[name="tipo"][value="${data.tipo}"]`);
+        if (r) r.checked = true;
+      }
+      if (data.lastMarginEdit) lastMarginEdit = data.lastMarginEdit;
+    } catch (e) {
+      console.warn('Falha ao carregar:', e);
+    }
+  }
+
+  function limpar() {
+    if (!confirm('Tem certeza que deseja limpar todos os dados salvos?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    document.getElementById('wizardForm').reset();
+    $('horasMes').value = '160';
+    lastMarginEdit = 'pct';
+    $('dashboard').hidden = true;
+    $('wizardForm').hidden = false;
+    mostrarStep(1);
+  }
+
+  // ---------- Eventos ----------
+  function bindEvents() {
+    $('btnProximo').addEventListener('click', () => {
+      if (validarStep(currentStep)) mostrarStep(currentStep + 1);
+    });
+    $('btnVoltar').addEventListener('click', () => mostrarStep(currentStep - 1));
+
+    $('btnCalcular').addEventListener('click', () => {
+      // Valida etapas críticas mesmo se o usuário pulou direto
+      if (!validarStep(2) || !validarStep(4)) {
+        // volta para a primeira inválida
+        const d = coletarDados();
+        if (d.custoMateriais <= 0 && (d.custoUnitario <= 0 || d.quantidade <= 0)) {
+          mostrarStep(2);
+        } else if (d.rendaMes <= 0) {
+          mostrarStep(4);
+        }
+        return;
+      }
+      const d = coletarDados();
+      const r = calcular(d);
+      renderDashboard(r, d);
+      salvar();
+    });
+
+    $('btnNovo').addEventListener('click', () => {
+      $('dashboard').hidden = true;
+      $('wizardForm').hidden = false;
+      mostrarStep(1);
+    });
+
+    $('btnLimpar').addEventListener('click', limpar);
+
+    // Margem: detecta qual o usuário está editando
+    $('margemPct').addEventListener('input', () => {
+      lastMarginEdit = 'pct';
+      $('lucroFixo').value = '';
+    });
+    $('lucroFixo').addEventListener('input', () => {
+      lastMarginEdit = 'fixo';
+      $('margemPct').value = '';
+    });
+
+    // Salvar e atualizar previews em qualquer mudança
+    document.getElementById('wizardForm').addEventListener('input', () => {
+      atualizarPreviews();
+      salvar();
+    });
+    document.getElementById('wizardForm').addEventListener('change', salvar);
+  }
+
+  // ---------- Init ----------
+  function init() {
+    $('ano').textContent = new Date().getFullYear();
+    carregar();
+    bindEvents();
+    mostrarStep(1);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
 })();
 
-  </script>
+</script>
 </body>
 </html>
